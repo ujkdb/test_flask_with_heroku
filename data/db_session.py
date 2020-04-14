@@ -4,8 +4,6 @@ import sqlalchemy.orm as orm
 from sqlalchemy.orm import Session
 import sqlalchemy.ext.declarative as dec
 
-from config import LOCAL_DB
-
 SqlAlchemyBase = dec.declarative_base()
 
 __factory = None
@@ -20,6 +18,7 @@ def global_init(db):
     if db:
         conn_str = os.environ['DATABASE_URL']
     else:
+        from config import LOCAL_DB
         conn_str = LOCAL_DB
 
     engine = sa.create_engine(conn_str, echo=False)
