@@ -18,10 +18,8 @@ def global_init(db):
     if db == 'sqlite':
         conn_str = f'sqlite:///db/test.sqlite?check_same_thread=False'
     else:
-        if os.environ['DATABASE_URL']:
-            raise RuntimeError("DATABASE_URL is not set")
-        conn_str = os.getenv("DATABASE_URL")
-
+        conn_str = os.environ['DATABASE_URL']
+    print(conn_str)
     engine = sa.create_engine(conn_str, echo=False)
     __factory = orm.sessionmaker(bind=engine)
 
