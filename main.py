@@ -3,7 +3,7 @@ import os
 from flask import Flask, render_template, redirect
 from flask_wtf import FlaskForm
 from wtforms import FileField, StringField, IntegerField, SubmitField
-# from werkzeug import secure_filename
+from werkzeug.utils import secure_filename
 from wtforms.validators import DataRequired
 from flask_restful import reqparse, abort, Api, Resource
 
@@ -67,7 +67,7 @@ class AvatarForm(FlaskForm):
 def avatar():
     form = AvatarForm()
     if form.validate_on_submit():
-        avatar_path = f'static/img/ava_{form.file.data.filename}'  # secure_filename(form.file.data.filename)
+        avatar_path = f'static/img/avatar_{secure_filename(form.file.data.filename)}'
         form.file.data.save(avatar_path)
         return render_template('avatar.html', form=form, avatar=avatar_path)
     return render_template('avatar.html', form=form)
@@ -79,7 +79,9 @@ api.add_resource(NewsListResource, '/api/v2/news')
 if __name__ == '__main__':
     app.register_blueprint(news_api.blueprint)
     db_session.global_init(os.environ.get('DATABASE_URL', ''))
-    # import fill_base
+    session = db_session.create_session()
+    if not session.query(User).first():
+        import fill_base
 
     if "PORT" in os.environ:
         app.run(host='0.0.0.0', port=os.environ["PORT"])
