@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% for news_ in news %}
+<h1>{{news_[0]}} ({{news_[1]}})!</h1>
+{% endfor %}
+{% endblock %}

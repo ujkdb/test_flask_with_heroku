@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% for user in users %}
+<h1>Привет, {{user.name}} {{user.id}}!</h1>
+{% endfor %}
+{% if last_news %}
+<p>Последняя новость: {{last_news}}</p>
+{% endif %}
+{% endblock %}

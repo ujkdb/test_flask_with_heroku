@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if avatar %}
+<img src="{{ avatar }}" alt="аватар">
+{% endif %}
+
+    <h1>Загрузите аватар:</h1>
+    <form action="" method="post" enctype="multipart/form-data" novalidate>
+        {{ form.csrf_token }}
+        <p>{{ form.file(type="file", class="form-control-file") }} </p>
+        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    </form>
+{% endblock %}

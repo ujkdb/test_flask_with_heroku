@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+    <h1>Добавьте новость:</h1>
+    <form action="" method="post" novalidate>
+        {{ form.csrf_token }}
+        <p>{{ form.user(type="integer") }} </p>
+        <p>{{ form.content(type="string") }} </p>
+        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    </form>
+{% endblock %}
