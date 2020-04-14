@@ -77,7 +77,9 @@ api.add_resource(NewsResource, '/api/v2/news/<int:news_id>')
 api.add_resource(NewsListResource, '/api/v2/news')
 
 if __name__ == '__main__':
+
     db_session.global_init("heroku postrge")  #"sqlite"
     app.register_blueprint(news_api.blueprint)
+    import fill_base
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
