@@ -4,6 +4,7 @@ import sqlalchemy.orm as orm
 from sqlalchemy.orm import Session
 import sqlalchemy.ext.declarative as dec
 
+LOCAL_DB = "/db/test.sqlite"
 SqlAlchemyBase = dec.declarative_base()
 
 __factory = None
@@ -15,11 +16,11 @@ def global_init(db):
     if __factory:
         return
 
-    if db == 'sqlite':
-        conn_str = f'sqlite:///db/test.sqlite?check_same_thread=False'
-    else:
+    if db:
         conn_str = os.environ['DATABASE_URL']
-    print(conn_str)
+    else:
+        conn_str = f'sqlite://{LOCAL_DB}?check_same_thread=False'
+
     engine = sa.create_engine(conn_str, echo=False)
     __factory = orm.sessionmaker(bind=engine)
 
