@@ -1,3 +1,4 @@
+import os
 import sqlalchemy as sa
 import sqlalchemy.orm as orm
 from sqlalchemy.orm import Session
@@ -8,17 +9,18 @@ SqlAlchemyBase = dec.declarative_base()
 __factory = None
 
 
-def global_init(db_file):
+def global_init(db):
     global __factory
 
     if __factory:
         return
 
-    if not db_file or not db_file.strip():
-        raise Exception("Необходимо указать файл базы данных.")
-
-    conn_str = f'sqlite:///{db_file.strip()}?check_same_thread=False'
-    print(f"Подключение к базе данных по адресу {conn_str}")
+    if db == 'sqlite':
+        conn_str = f'sqlite:///db/test.sqlite?check_same_thread=False'
+    else:
+        if os.getenv("DATABASE_URL"):
+            raise RuntimeError("DATABASE_URL is not set")
+        conn_str = os.getenv("DATABASE_URL")
 
     engine = sa.create_engine(conn_str, echo=False)
     __factory = orm.sessionmaker(bind=engine)
