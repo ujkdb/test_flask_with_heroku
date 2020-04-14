@@ -15,10 +15,10 @@ def global_init():
     if __factory:
         return
 
-    if 'DATABASE_URL' in os.environ:
-        conn_str = os.environ['DATABASE_URL']
+    if 'DATABASE_URL' in os.environ:  # возьмём адрес базы из переменной окружения
+        conn_str = os.environ['DATABASE_URL']  # сработает на Heroku
     else:
-        from config import LOCAL_DB
+        from config import LOCAL_DB  # сработает локально
         conn_str = LOCAL_DB
 
     engine = sa.create_engine(conn_str, echo=False)
