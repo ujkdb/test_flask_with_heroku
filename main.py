@@ -78,12 +78,12 @@ api.add_resource(NewsListResource, '/api/v2/news')
 
 if __name__ == '__main__':
     app.register_blueprint(news_api.blueprint)
-    db_session.global_init(os.environ.get('DATABASE_URL', ''))
+
+    db_session.global_init()
+
+    # если в базе пусто, заполним её тестовыми данными
     session = db_session.create_session()
     if not session.query(User).first():
         import fill_base
 
-    if "PORT" in os.environ:
-        app.run(host='0.0.0.0', port=os.environ["PORT"])
-    else:
-        app.run(host='localhost', port=5000)
+    app.run(port=os.environ.get("PORT", 5000))

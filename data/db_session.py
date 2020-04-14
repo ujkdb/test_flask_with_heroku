@@ -9,13 +9,13 @@ SqlAlchemyBase = dec.declarative_base()
 __factory = None
 
 
-def global_init(db):
+def global_init():
     global __factory
 
     if __factory:
         return
 
-    if db:
+    if 'DATABASE_URL' in os.environ:
         conn_str = os.environ['DATABASE_URL']
     else:
         from config import LOCAL_DB
