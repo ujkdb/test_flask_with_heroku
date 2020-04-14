@@ -1,4 +1,5 @@
 import flask
+import os
 from flask import Flask, render_template, redirect
 from flask_wtf import FlaskForm
 from wtforms import FileField, StringField, IntegerField, SubmitField
@@ -78,4 +79,5 @@ api.add_resource(NewsListResource, '/api/v2/news')
 if __name__ == '__main__':
     db_session.global_init("db/test.sqlite")
     app.register_blueprint(news_api.blueprint)
-    app.run(port=8080, host='127.0.0.1')
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
