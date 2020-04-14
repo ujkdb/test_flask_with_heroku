@@ -5,3 +5,4 @@ wtforms
 werkzeug
 flask_restful
 sqlalchemy
+psycopg2
