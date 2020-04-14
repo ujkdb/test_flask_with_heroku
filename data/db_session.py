@@ -18,7 +18,7 @@ def global_init(db):
     if db == 'sqlite':
         conn_str = f'sqlite:///db/test.sqlite?check_same_thread=False'
     else:
-        if os.getenv("DATABASE_URL"):
+        if os.environ['DATABASE_URL']:
             raise RuntimeError("DATABASE_URL is not set")
         conn_str = os.getenv("DATABASE_URL")
 
